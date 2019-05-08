@@ -18,7 +18,7 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 public class FlutterSocialSharePlugin implements MethodCallHandler {
     private static final String METHOD_SHARE_LINK_TO_FACEBOOK = "shareLinkToFacebook";
-    private static final String ARGUMENT_URI = "uri";
+    private static final String ARGUMENT_URI = "contentUrl";
     private final Registrar registrar;
 
     private FlutterSocialSharePlugin(Registrar registrar) {
