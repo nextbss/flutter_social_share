@@ -5,8 +5,7 @@ import 'package:flutter/services.dart';
 class FlutterSocialShare {
   static const MethodChannel _channel = const MethodChannel('flutter_social_share');
 
-  Future<FacebookShareResult> shareLinkToFacebook(String contentUrl,
-      String applicationId) async {
+  Future<FacebookShareResult> shareLinkToFacebook(String contentUrl) async {
     Map<dynamic, dynamic> result = await _channel.invokeMethod(
         'shareLinkToFacebook', {'contentUrl': contentUrl});
     return FacebookShareResult._(result);
