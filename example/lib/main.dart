@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:flutter/services.dart';
 import 'package:flutter_social_share/flutter_social_share.dart';
 
@@ -12,8 +11,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
-
   @override
   void initState() {
     super.initState();
@@ -27,7 +24,12 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: MaterialButton(
+            color: Theme.of(context).primaryColor,
+            child: Text('Click-me'),
+            onPressed: () => FlutterSocialShare()
+                .shareLinkToFacebook('https://nextbss.co.ao')
+          ),
         ),
       ),
     );
