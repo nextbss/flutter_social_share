@@ -10,6 +10,14 @@ class FlutterSocialShare {
         'shareLinkToFacebook', {'contentUrl': contentUrl});
     return FacebookShareResult._(result);
   }
+
+  Future tweet(String contentText, {String imageUrl = ''}) async {
+    await _channel.invokeMethod('tweet', {
+        'contentText': contentText,
+        'imageUrl': imageUrl,
+      },
+    );
+  }
 }
 
 enum FacebookShareStatus {

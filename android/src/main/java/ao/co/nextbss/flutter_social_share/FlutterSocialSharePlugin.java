@@ -5,10 +5,10 @@ import android.net.Uri;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.share.Share;
 import com.facebook.share.Sharer;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -18,7 +18,11 @@ import io.flutter.plugin.common.PluginRegistry.Registrar;
 
 public class FlutterSocialSharePlugin implements MethodCallHandler {
     private static final String METHOD_SHARE_LINK_TO_FACEBOOK = "shareLinkToFacebook";
-    private static final String ARGUMENT_URI = "contentUrl";
+    private static final String ARGUMENT_CONTENT_URI = "contentUrl";
+
+    private static final String METHOD_TWEET = "tweet";
+    private static final String ARGUMENT_CONTENT_TEXT = "contentText";
+
     private final Registrar registrar;
 
     private FlutterSocialSharePlugin(Registrar registrar) {
@@ -35,8 +39,12 @@ public class FlutterSocialSharePlugin implements MethodCallHandler {
     public void onMethodCall(MethodCall call, Result result) {
         switch (call.method) {
             case METHOD_SHARE_LINK_TO_FACEBOOK:
-                String uriToShare = call.argument(ARGUMENT_URI);
+                String uriToShare = call.argument(ARGUMENT_CONTENT_URI);
                 shareLinkToFacebook(uriToShare, result);
+                break;
+            case METHOD_TWEET:
+                String textToTweet = call.argument(ARGUMENT_CONTENT_TEXT);
+                tweet(textToTweet, result);
                 break;
             default:
                 result.notImplemented();
@@ -69,7 +77,12 @@ public class FlutterSocialSharePlugin implements MethodCallHandler {
         });
 
         ShareDialog.show(registrar.activity(), shareLinkContent);
+    }
 
-
+    private void tweet(String textToTweet, final Result result) {
+        new TweetComposer.Builder(registrar.activity())
+                .text(textToTweet)
+                .show();
+        result.success(true);
     }
 }

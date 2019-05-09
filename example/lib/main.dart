@@ -24,11 +24,26 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: MaterialButton(
-            color: Theme.of(context).primaryColor,
-            child: Text('Click-me'),
-            onPressed: () => FlutterSocialShare()
-                .shareLinkToFacebook('https://nextbss.co.ao')
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              MaterialButton(
+                  color: Theme.of(context).primaryColor,
+                  child: Text(
+                    'Share to Facebook'.toUpperCase(),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () => FlutterSocialShare()
+                      .shareLinkToFacebook('https://nextbss.co.ao')),
+              MaterialButton(
+                  color: Theme.of(context).primaryColor,
+                  child: Text(
+                    'Tweet'.toUpperCase(),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  onPressed: () =>
+                      FlutterSocialShare().tweet('https://nextbss.co.ao')),
+            ],
           ),
         ),
       ),
