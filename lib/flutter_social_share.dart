@@ -3,16 +3,23 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 
 class FlutterSocialShare {
-  static const MethodChannel _channel = const MethodChannel('flutter_social_share');
+  static const MethodChannel _channel =
+      const MethodChannel('flutter_social_share');
 
-  Future<FacebookShareResult> shareLinkToFacebook(String contentUrl) async {
-    Map<dynamic, dynamic> result = await _channel.invokeMethod(
-        'shareLinkToFacebook', {'contentUrl': contentUrl});
+  Future<FacebookShareResult> shareLinkToFacebook(String contentUrl,
+      {String imageUrl = ''}) async {
+    Map<dynamic, dynamic> result =
+        await _channel.invokeMethod('shareLinkToFacebook', {
+      'contentUrl': contentUrl,
+      'imageUrl': imageUrl,
+    });
     return FacebookShareResult._(result);
   }
 
   Future tweet(String contentText, {String imageUrl = ''}) async {
-    await _channel.invokeMethod('tweet', {
+    await _channel.invokeMethod(
+      'tweet',
+      {
         'contentText': contentText,
         'imageUrl': imageUrl,
       },
@@ -20,20 +27,15 @@ class FlutterSocialShare {
   }
 }
 
-enum FacebookShareStatus {
-  success,
-  cancelledByUser,
-  error
-}
+enum FacebookShareStatus { success, cancelledByUser, error }
 
 class FacebookShareResult {
   final FacebookShareStatus status;
   final String errorMessage;
 
   FacebookShareResult._(Map<String, dynamic> map)
-    : status = parseStatus(map['status']),
-      errorMessage = map['errorMessage'];
-
+      : status = parseStatus(map['status']),
+        errorMessage = map['errorMessage'];
 
   static FacebookShareStatus parseStatus(String status) {
     switch (status) {
